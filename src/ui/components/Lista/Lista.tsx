@@ -1,38 +1,43 @@
+import { Button } from '@mui/material'
 import {
-  ListaStyled,
-  ItemLista,
-  Foto,
-  Informacoes,
-  Nome,
-  Descricao,
-} from "./Lista.style";
-import {Button} from '@mui/material'
+    ListaStyled,
+    ItemLista,
+    Foto,
+    Informacoes,
+    Nome,
+    Descricao
+} from './Lista.style'
+import { Pet } from '../../../data/@types/Pet'
+import { TextService } from '../../../data/services/TextService';
 
-export default function Lista(){
-    return(
+interface ListaProps{
+    pets: Pet[];
+    onSelect: (pet: Pet) => void;
+}
+
+export default function Lista(props: ListaProps){
+    const tamanhoMaximoTexto = 200;
+
+    return (
         <ListaStyled>
-            <ItemLista>
-                <Foto src={'https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3125045:1629382969/Calopsita.jpg?f=16x9&h=720&q=0.8&w=1280&$p$f$h$q$w=012aeee'}/>
-                <Descricao>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati culpa repellendus temporibus provident distinctio quod, accusantium adipisci pariatur libero aliquam dicta corrupti quaerat minima qui iure tempore expedita. Repudiandae?
-                </Descricao>
-                <Button fullWidth variant={'contained'}>Adotar</Button>
-            </ItemLista>
-            <ItemLista>
-                <Foto src={'https://static1.patasdacasa.com.br/articles/8/10/38/@/4864-o-cachorro-inteligente-mostra-essa-carac-articles_media_mobile-1.jpg'}/>
-                <Descricao>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati culpa repellendus temporibus provident distinctio quod, accusantium adipisci pariatur libero aliquam dicta corrupti quaerat minima qui iure tempore expedita. Repudiandae?
-                </Descricao>
-                <Button fullWidth variant={'contained'}>Adotar</Button>
-            </ItemLista>
-            <ItemLista>
-                <Foto src={'data:image/jpeg;base64,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'}/>
-                <Descricao>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati culpa repellendus temporibus provident distinctio quod, accusantium adipisci pariatur libero aliquam dicta corrupti quaerat minima qui iure tempore expedita. Repudiandae?
-                </Descricao>
-                <Button fullWidth variant={'contained'}>Adotar</Button>
-            </ItemLista>
+            {props.pets.map(pet => (
+                <ItemLista key={pet.id} >
+                    <Foto src={pet.foto} alt={pet.nome} />
+                    <Informacoes>
+                        <Nome>{pet.nome}</Nome>
+                        <Descricao>
+                            {TextService.limitarTexto(pet.historia, tamanhoMaximoTexto)}
+                        </Descricao>
+                        <Button
+                            variant={'contained'}
+                            fullWidth
+                            onClick={() => props.onSelect(pet)}
+                        >
+                            Adotar {pet.nome}
+                        </Button>
+                    </Informacoes>
+                </ItemLista>
+            ))}
         </ListaStyled>
     )
-    
 }

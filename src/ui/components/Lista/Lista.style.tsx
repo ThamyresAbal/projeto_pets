@@ -22,6 +22,7 @@ export const ItemLista = styled('li')`
 export const Foto = styled('img')`
     width: 100%;
     height: 250px;
+    resize: vertical;
 `
 
 export const Informacoes = styled('div')`

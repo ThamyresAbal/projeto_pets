@@ -22,7 +22,7 @@ export default function Lista(props: ListaProps){
         <ListaStyled>
             {props.pets.map(pet => (
                 <ItemLista key={pet.id} >
-                    <Foto src={pet.foto} alt={pet.nome} />
+                    <Foto src={pet.foto} alt={pet.nome}  />
                     <Informacoes>
                         <Nome>{pet.nome}</Nome>
                         <Descricao>
